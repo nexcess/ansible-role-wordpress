@@ -1,0 +1,5 @@
+---
+
+- name: Set Fact nex_app_shared_mounts
+  set_fact:
+    nex_app_shared_mounts="{{ wordpress_shared_mounts }}"

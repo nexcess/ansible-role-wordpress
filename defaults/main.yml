@@ -1,0 +1,28 @@
+---
+
+wordpress_version: "4.8.2"
+wordpress_tarball: "wordpress-{{ wordpress_version }}.tar.gz"
+wordpress_tarball_url: "https://wordpress.org/{{ wordpress_tarball }}"
+wordpress_salt_url: "https://api.wordpress.org/secret-key/1.1/salt/"
+wordpress_table_prefix: "wp_"
+wordpress_debug: false
+
+wordpress_fresh_install: false
+
+wordpress_client_repo: "{{ nex_app_git_repo }}"
+wordpress_deploy_branch: "{{ nex_app_git_branch | default('master') }}"
+
+wordpress_base_url: "http://{{ nex_app_domain }}/"
+wordpress_base_url_secure: "https://{{ nex_app_domain }}/"
+wordpress_db_host: "{{ db_backnet_addrs[0] }}"
+wordpress_db_name: "{{ nex_app_db_name | default('wordpress') }}"
+wordpress_db_user: "{{ nex_app_db_user | default('wordpress') }}"
+wordpress_db_pass: "{{ nex_app_db_pass }}"
+wordpress_db_charset: "utf8"
+wordpress_db_collate: ""
+wordpress_admin_firstname: "Wordpress"
+wordpress_admin_lastname: "User"
+wordpress_admin_email: "example@user.com"
+wordpress_admin_user: "admin"
+wordpress_admin_pass: "111please/override/me222"
+wordpress_shared_mounts: []
