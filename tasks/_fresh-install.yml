@@ -1,0 +1,41 @@
+---
+
+- name: Register Contents Of Doc Root
+  command: "ls {{ nex_app_build_code_base }}"
+  register: doc_root_contents
+
+- name: Get Wordpress
+  get_url:
+    url="{{ wordpress_tarball_url }}"
+    dest="/tmp/{{ wordpress_tarball }}"
+    force="yes"
+    mode=0400
+
+- name: Unpack Wordpress
+  unarchive:
+    src="/tmp/{{ wordpress_tarball }}"
+    dest="{{ nex_app_build_code_base }}"
+  become: true
+  become_user: "{{ nex_app_unix_user }}"
+  when:
+    - doc_root_contents.stdout == ""
+
+- name: Clean Up Tarball
+  file:
+    src="/tmp/{{ wordpress_tarball }}"
+    state="absent"
+
+- name: Seed wp-config.php
+  uri:
+    url="{{ wordpress_salt_url }}"
+    return_content="yes"
+  register: wordpress_salt
+
+- name: Install wp-config.php
+  template:
+    src="wp-config.php.j2"
+    dest="{{ nex_app_build_code_base }}"
+  become: true
+  become_user: "{{ nex_app_unix_user }}"
+  when:
+    - doc_root_contents.stdout == ""

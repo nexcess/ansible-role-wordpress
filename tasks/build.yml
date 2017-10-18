@@ -1,0 +1,12 @@
+---
+
+- include: _normal-build.yml
+  static: no
+  when:
+    - wordpress_fresh_install is undefined or wordpress_fresh_install == false
+
+- include: _fresh-install.yml
+  static: no
+  when:
+    - wordpress_fresh_install is defined
+    - wordpress_fresh_install == true
